@@ -1,0 +1,50 @@
+---
+interface Props {
+  id: string;
+  title: string;
+}
+const { id, title } = Astro.props;
+---
+
+{
+  id ? (
+    <div class="yt" data-yt={id} data-title={title}>
+      <img
+        src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
+      <button class="yt-btn" aria-label={`Play video: ${title}`}>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8 5v14l11-7z" />
+        </svg>
+      </button>
+    </div>
+  ) : (
+    <div class="yt yt-empty">
+      <p>This one's still on the editing bench — video coming soon.</p>
+    </div>
+  )
+}
+
+<script>
+  // Swap the thumbnail for the real player only when someone presses play.
+  // Event delegation on document = survives view transitions, registers once.
+  if (!(window as any).__ytDelegated) {
+    (window as any).__ytDelegated = true;
+    document.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest('.yt-btn');
+      if (!btn) return;
+      const box = btn.closest<HTMLElement>('.yt');
+      if (!box || !box.dataset.yt) return;
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${box.dataset.yt}?autoplay=1&rel=0`;
+      iframe.title = box.dataset.title || 'Video';
+      iframe.allow =
+        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+      box.replaceChildren(iframe);
+    });
+  }
+</script>

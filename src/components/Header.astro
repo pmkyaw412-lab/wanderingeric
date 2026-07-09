@@ -1,0 +1,15 @@
+---
+import { SITE } from '../config';
+---
+
+<header class="site-head">
+  <div class="head-inner">
+    <a class="brand" href="/" aria-label={`${SITE.name} — home`}>
+      <span class="dot" aria-hidden="true"></span>{SITE.name}
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="/#lately">lately</a>
+      <a href="/#about">about</a>
+    </nav>
+  </div>
+</header>

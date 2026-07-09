@@ -1,0 +1,99 @@
+---
+import Base from '../layouts/Base.astro';
+import Card from '../components/Card.astro';
+import { SITE, NOW, ABOUT } from '../config';
+import { getFeed } from '../lib/feed';
+
+const feed = await getFeed();
+const nameParts = SITE.name.split(' ');
+const gradWord = nameParts[0];
+const restName = nameParts.slice(1).join(' ');
+---
+
+<Base>
+  <section class="hero">
+    <span class="smallcaps">{SITE.locationLine}</span>
+    <h1><span class="grad">{gradWord}</span> {restName}</h1>
+    <p class="lede">
+      {SITE.ledeStrong}
+      <span class="soft"> {SITE.ledeSoft}</span>
+    </p>
+    <div class="h1-seam" aria-hidden="true"></div>
+
+    <div class="now-strip" aria-label="What I'm up to now">
+      <span class="now-label"><span class="pulse" aria-hidden="true"></span>Now</span>
+      {
+        NOW.map((item, i) => (
+          <>
+            {i > 0 && (
+              <span class="now-sep" aria-hidden="true">
+                ·
+              </span>
+            )}
+            <span class="now-item">{item}</span>
+          </>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="feed" id="lately">
+    <div class="feed-head">
+      <h2 class="sec">Lately</h2>
+      <span class="after">— a running feed of vlogs, projects &amp; things I'm reading</span>
+    </div>
+
+    <div class="chips" role="group" aria-label="Filter the feed">
+      <button class="chip" data-filter="all" aria-pressed="true">All</button>
+      <button class="chip" data-filter="vlog" aria-pressed="false">Vlogs</button>
+      <button class="chip" data-filter="project" aria-pressed="false">Projects</button>
+      <button class="chip" data-filter="writing" aria-pressed="false">Writing</button>
+      <button class="chip" data-filter="reading" aria-pressed="false">Reading</button>
+      <button class="chip" data-filter="hobby" aria-pressed="false">Hobbies</button>
+    </div>
+
+    <div class="grid" id="grid">
+      {feed.map((entry) => <Card entry={entry} />)}
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <h2 class="sec">About</h2>
+    <div class="about-grid">
+      <div>
+        <p class="pull">{ABOUT.pull}</p>
+        {ABOUT.paragraphs.map((p) => <p>{p}</p>)}
+      </div>
+      <dl class="specs" aria-label="At a glance">
+        {
+          ABOUT.specs.map((s) => (
+            <div>
+              <dt>{s.term}</dt>
+              <dd>{s.detail}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Feed filter — re-inits after view transitions.
+  function initFilter() {
+    const chips = document.querySelectorAll<HTMLButtonElement>('.chip');
+    const cards = document.querySelectorAll<HTMLElement>('.card');
+    chips.forEach((chip) => {
+      chip.onclick = () => {
+        const f = chip.dataset.filter;
+        chips.forEach((c) => c.setAttribute('aria-pressed', c === chip ? 'true' : 'false'));
+        cards.forEach((card) => {
+          const show = f === 'all' || card.dataset.cat === f;
+          card.classList.toggle('is-hidden', !show);
+        });
+      };
+    });
+  }
+  initFilter();
+  document.addEventListener('astro:page-load', initFilter);
+</script>

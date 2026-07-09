@@ -1,0 +1,60 @@
+---
+import { LABEL, hrefFor, fmtDate, readingTime, type FeedEntry } from '../lib/feed';
+
+interface Props {
+  entry: FeedEntry;
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+const href = hrefFor(entry);
+
+const meta = (() => {
+  switch (data.type) {
+    case 'vlog':
+      return [fmtDate(data.date), data.location].filter(Boolean).join(' · ');
+    case 'writing':
+      return readingTime(entry.body);
+    case 'project':
+      return [data.tech, data.status].filter(Boolean).join(' · ');
+    case 'reading':
+      return data.status;
+    case 'hobby':
+      return data.meta ?? fmtDate(data.date);
+  }
+})();
+---
+
+<a class="card" data-cat={data.type} href={href}>
+  {
+    data.type === 'vlog' && (
+      <div class="thumb">
+        {data.youtube && (
+          <img
+            src={`https://i.ytimg.com/vi/${data.youtube}/hqdefault.jpg`}
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+        )}
+        <span class="play" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        </span>
+        {data.duration && <span class="dur">{data.duration}</span>}
+      </div>
+    )
+  }
+  <div class="card-body">
+    <span class="tag">{LABEL[data.type]}</span>
+    <h3>{data.title}</h3>
+    {data.type !== 'reading' && 'description' in data && data.description && (
+      <p class="desc">{data.description}</p>
+    )}
+    {data.type === 'reading' && (
+      <p class="desc">{data.author}.{data.description ? ` ${data.description}` : ''}</p>
+    )}
+    {meta && <p class="meta">{meta}</p>}
+  </div>
+</a>
