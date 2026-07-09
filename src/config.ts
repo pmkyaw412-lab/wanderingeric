@@ -8,46 +8,47 @@ export const SITE = {
   author: 'Eric',
   // Shows in search results and link previews:
   description:
-    'Eric — a materials student in Osaka. Welding, small tools, and the wandering in between.',
+    "Eric — civil engineering master's student at Osaka University, researching welding deformation through simulation. EJU Math tutor, and the person behind Wandering Eric.",
   // The small line above your name on the homepage:
   locationLine: 'Osaka, Japan — 34.7°N · 135.5°E',
   // The intro under your name. First sentence is dark, the rest is soft grey.
-  ledeStrong: "Hey — I'm Eric. By day I weld steel and measure how it fails.",
+  ledeStrong:
+    "Hey — I'm Eric. By day I'm a master's student in civil engineering at Osaka University, simulating how welding deforms steel.",
   ledeSoft:
-    'The rest of the time I build small tools and wander Kansai with a camera rolling. It all ends up here.',
+    'After hours I teach EJU Math and run Wandering Eric on Facebook. This site is where it all comes together.',
   // The italic sign-off in the footer:
   signOff: 'Struck an arc in Osaka — 2026',
 };
 
 /** The "Now" strip under the hero. Keep items short; 3–5 feels right. */
 export const NOW: string[] = [
-  'finishing my welding thesis',
-  'job-hunting for spring 2028',
-  'learning to color-grade footage',
-  'reading Shop Class as Soulcraft',
+  'internship & job hunting (28卒)',
+  'prepping for the Class-2 Architect exam (二級建築士)',
+  'running welding-deformation simulations',
 ];
 
-/** Footer links. Replace the # with your real URLs (or delete a line to hide it). */
+/** Footer links. Delete a line to hide it. */
 export const SOCIALS: { label: string; href: string }[] = [
-  { label: 'YouTube', href: '#' },
-  { label: 'GitHub', href: '#' },
-  { label: 'Instagram', href: '#' },
-  { label: 'Email', href: 'mailto:hello@example.com' },
+  { label: 'Facebook', href: 'https://www.facebook.com/p/Wandering-Eric-61559440529169/' },
+  { label: 'Email', href: 'mailto:pmkyawclass@gmail.com' },
+  // Want more later? Copy a line, e.g.:
+  // { label: 'Instagram', href: 'https://instagram.com/yourname' },
 ];
 
 /** The About section on the homepage. */
 export const ABOUT = {
   pull:
-    "Somewhere between the lab bench and the train window — that's where most of this gets made.",
+    "Somewhere between the simulation queue and the train window — that's where most of this gets made.",
   paragraphs: [
-    "I'm Eric, a materials student in Osaka. My thesis is about how steel behaves when it's pushed to the point of failure, and the heat-tint a weld leaves behind is honestly my favorite palette — it's the one running through this site, straw to temper-blue.",
-    "When I'm not in the lab I build small, quiet tools, mostly to keep my own life in order. And lately I carry a camera everywhere, filming the ordinary parts of wandering around Kansai. This site is where the welding, the building, and the walking all sit in one place.",
+    "I'm Eric, a civil engineering student at Osaka University, in the first year of my master's (M1). My research is on welding and welding deformation — I build simulations of how a weld's heat pulls steel out of shape, and how to predict and control it. The colors a weld leaves behind as it cools became this site's palette, straw to temper-blue.",
+    'Outside the lab, I teach EJU Math part-time and run Wandering Eric, the Facebook page where my vlogs and wanderings live. Right now the calendar is full of internship applications, job hunting, and prep for the Class-2 Architect licence (二級建築士) — and this site is the one place where all of it sits together.',
   ],
   /** The little spec-sheet card. */
   specs: [
     { term: 'Based in', detail: 'Osaka, Japan' },
-    { term: 'Studying', detail: 'Welding, and how steel fails' },
-    { term: 'Building', detail: 'Small tools for money & lab life' },
-    { term: 'Carrying', detail: 'A camera and a roll of Portra' },
+    { term: 'Studying', detail: 'M1, Civil Engineering, Osaka University' },
+    { term: 'Researching', detail: 'Welding deformation & simulation' },
+    { term: 'Teaching', detail: 'EJU Math, part-time' },
+    { term: 'Aiming for', detail: 'Class-2 Architect licence (二級建築士)' },
   ],
 };
